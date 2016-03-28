@@ -1,0 +1,8 @@
+Aprenda a usar o git em 4 comandos simples!
+
+- git add .
+- git commit -m "mensagem explicando no que que eu trabalhei dessa vez"
+- pit pull
+- git push
+
+Pronto! você é um pro em git!

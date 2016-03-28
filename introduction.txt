@@ -1,0 +1,106 @@
+- bem-vindos ao dev talk de git.
+- para saber como está o skill level, quantos consideram saber usar o git? Saber usar ele bem? Como ele funciona? Ser muito avançado em git?
+
+* mostrar xkcd git comic
+
+- Pois é, muitos lugares que ensinam a usar o git apresentam ele do jeito mais amigável possível, basicamente assim:
+
+* mostrar git-in-4-commands.txt
+
+- parece ótimo, mas daí a gente commita nudes.zip sem querer, ou alguém escreve no mesmo arquivo que a gente, ou ou o seu supervisor pede para rebasear sua branch na master, ou pede pra mudar uma coisinha dentro de um commit lááá no meio da sua branch.... ENFIM.
+
+- ferramenta fácil de usar p/ coisas básicas, mas quando coisas dão errado, é super difícil de consertar problemas. O git é assim por alguns (bons) motivos.
+
+
+- objetivo é tentar passar como o git funciona, quais as idéias por trás, porque entendendo as idéias bem simples e elegantes que o git é baseado em cima, o jeito de consertar as coisas fica beem mais óbvio e simples de entender.
+
+
+- Então quando vocês pensam em git, qual a 1a palavra que vêm à cabeça? (e não vale falar "tua mãe")
+
+commits?
+branches?
+repositório?
+local?
+merge?
+sourcetree?
+
+bom, uma coisa que provavelmente ninguém pensou foi "tabela", "dicionário" ou "hashtable" né?
+
+No fundo o git é um banco de dados de arquivos. Não só de arquivos na verdade, de uma estrutura inteira de pastas. E ele guarda isso de um jeito bem simples mesmo: uma tabela de [chave -> valor], onde a chave é um hash.
+
+Basicamente tudo que pode ser chamado de "dados", o git guarda desse jeito.
+
+Cada "commit" no git é uma foto de como essa estrutura inteira de pastas estava, ou seja, cada uma dessas é uma "versão", e cada versão tem um hash identificando ela.
+
+
+* mostrar tela do tig,
+
+Cada commit também guarda uma referência para o(s) seu(s) "parent"(s), e assim a gente fica com esses desenhos bonitos de histórico de commits.
+
+
+Então isso é a 1a parte. O que que são branches então?
+
+Bom, lembra que eu falei que todo objeto tem um hash, então, em qualquer lugar onde tem endereços, existem referências! E branches são exatamente isso.
+
+Sério, não tem essa de "pense em branches como se fossem X", elas LITERALMENTE são referências. Que vão apontando para o commit mais novo que vc está trabalhando.
+
+Tags também são referências, a diferença aqui é que as tags ficam fixas.
+
+
+Então, toda vez que a gente estiver falando de manipular branches, o que a gente está fazendo é criar essas referências e mover elas de um lado pro outro.
+
+
+
+Finalmente então, qq quer dizer "inicializar um repositório git aqui", ou "essa pasta é um repositório git"?
+
+Bom, todo repositório tem uma pasta .git, que é onde o git guarda todos esses objetos. Sem pasta .git? Isso não é um repositório.
+
+Além disso tem uns arquivos de configuração (que a gente vai ver daqui a pouco), e well, os seus arquivos!
+..só que não sempre.
+
+Se vocês prestaram atenção no que eu descrevi até agora, nada explica como de fato colocar arquivos no git. Tem que ter alguma de tradução entre o jeito que o seu OS guarda / edita / salva arquivos, e o jeito que o git guarda / salva / edita arquivos, certo?
+
+O que o git faz é tentar se aproveitar o máximo possível desse jeito que o OS guarda os arquivos. Então todas as coisas que não começam com ".git" no nome, ele fica olhando e a priori, assumindo que podem ser coisas interessantes pra ele.
+
+
+Daí o git consegue olhar para o commit mais recente, a "HEAD", e comparar com o qq está acontecendo no working directory.
+
+
+Basicamente os seus arquivos podem estar em 2 estados pro git:
+
+- O git pode ter percebido que existe um arquivo lá, só que vc não deu o OK pro git ficar vigiando esse arquivo.
+- Ou, o git pode estar vigiando o arquivo.
+
+Se o arquivo estiver sendo vigiado, o conteúdo, ou melhor, modificações desse arquivo podem estar em 3 estados:
+
+- commitadas, ou seja, ela está gravada em um snapshot dentro do banco de dados do git,
+- elas podem não estar commitadas, ou seja, o arquivo está "sujo",
+- ou.... eu posso estar montando um commit, então o arquivo ainda está sujo, mas eu marquei essa modificação como pronta para entrar no próximo commit. A gente se refere a isso como "a modificação está staged" ou "na staging area", ou "no stage do próximo commit", ou até "no index" (o nome da estrutura que guarda um commit futuro se chama "index", infelizmente).
+
+
+
+Então aqui finalmente entram aqueles comandos que a gente usa sempre:
+
+[$ git checkout <reference>] manipula a HEAD e o working directory. ela move a HEAD para um commit ou para uma referência específica, e atualiza o working directory com esse snapshot. Perceba que se o seu working directory estiver sujo, o git não vai perder essas modificações "sujas" ao fazer isso, então, como o git nunca never de jeito nenhum joga nada fora automaticamente, ele não vai deixar você fazer checkout sem antes limpar o repositório.
+
+
+[$ git add <file>] faz duas coisas: ele faz o git trackear um arquivo, e adiciona todas as modificações desse arquivo no stage do próximo commit. De fato, [$ git add -n <file>] só manda o git trackear o arquivo sem adicionar nenhuma modificação no stage, e [$ git add -p <file>] deixa você adicionar pedaços de um arquivo.
+
+
+finalmente, [$ git commit] cria um commit usando todas as coisas que estão staged para o próximo commit.
+
+
+
+E pronto! com isso você consegue trabalhar no git localmente.
+
+
+
+
+
+
+
+
+
+
+
+
