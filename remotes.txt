@@ -1,0 +1,42 @@
+Mas peraí, a gente não falou nada de servidor até agora né, nem de como manipular branches.
+
+
+
+Bom, essas features não existem para resolver o problema de versionamento em si, apenas commits é o suficiente para a parte de "controlar versão" no sentido de "fazer backups".
+
+
+
+Servidores centrais e branches servem para ajudar no trabalho compartilhado. A idéia de um servidor central é bem simples: o trabalho de todo mundo vai ter que ser juntado eventualmente anyway, então vamos trabalhar (contribuir) direto no "repositório central". Assim ele guarda o estado global de todo mundo, e a gente tem um backup coesivo do trabalho de todo mundo também.
+
+
+Branches servem pra facilitar esse trabalho cooperativo em um ambiente só. A idéia é que se tem várias pessoas trabalhando no mesmo arquivo, o trabalho delas vai ficar intercalado, e isso pode causar muitos conflitos e ficar sincronizando o arquivo de um pro outro toda hora é um inferno.
+
+
+Então a idéia é cada um poder trabalhar num blocão de trabalho de uma vez, e daí quando estiver pronto para juntar as coisas, juntar tudo de uma vez.
+
+Mas percebe que o servidor tem que conseguir guardar esse trabalho das duas pessoas ao mesmo tempo!
+
+
+
+Entram branches. Que nem eu expliquei na parte dos internals do git, branches são referências a commits, e a coisa especial delas é que a HEAD pode se "grudar" numa branch, avançando a branch conforme a HEAD avança.
+
+Então muitas vezes é mais fácil de se referir à branch como sendo esse trabalho todo que uma pessoa fez desde que ela "brancheou" pra fora da "master".
+
+
+Então, vamos brincar um pouco de remotos e branches, certo?
+
+primeiro, todo mundo aqui sabe que você pode criar uma branch nova com git branch <nomedabranch>, e que git checkout <nomedabranch> vai mover a HEAD para essa branch nova e atualizar o working directory com o conteúdo dessa branch. Ok.
+
+Agora digitem [$ git branch --all -v]
+
+Essas são todas as branches que existem no seu repositório local. Maluco né? tem várias a mais!
+
+
+
+Todas essas branches que se chamam origin/coisa são branches remotas. origin é um "remoto", um objeto que se refere a um outro repositório compatível com esse aqui. Geralmente isso significa que esses repositórios são clones um do outro!
+
+
+
+
+
+

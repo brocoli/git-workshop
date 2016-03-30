@@ -1,0 +1,209 @@
+
+==============================
+=== Git from the ground up ===
+==============================
+
+* Mostrar comic do xkcd e usar como hook para falar das 4 áreas de atuação do git, que são:
+    - guardar conteúdo
+    - versionar conteúdo guardado em snapshots
+    - organizar trabalho usando branches
+    - compartilhar commits entre repositórios
+
+
+*** git init para começar ***
+
+* guardar conteúdo:
+    = comandos são complicados (e desnecessários):
+        - ( hash-object -w [--stdin] )
+        - ( cat-file -p )
+        - ( master^{tree} )
+        - ( rev-parse )
+        - ( update-index --add --cacheinfo )
+        - ( write-tree )
+        - ( commit-tree )
+    = comando para inicializar:
+        - git init
+    - coisas guardadas estão no diretório .git/objects
+    - funciona como tabela lua -- é uma hashtable (com hash SHA-1)
+    - guarda "blobs" (conteúdo) e "trees" (estrutura de pastas)
+
+
+* versionar conteúdo guardado em snapshots
+    = comandos:
+        - git add
+        - git commit
+    - commits são snapshots de uma tree, mais uma descrição e uma referência pro commit "pai"
+    - isso cria um grafo de commmits (que por enquanto é uma árvore)
+    - para montar commits, precisamos de um working directory, e de um "index" ou "staging area"
+    - estados de um arquivo no working directory no git:
+        - untracked
+        - tracked
+    - estados de arquivos tracked no git:
+        - modified
+        - staged
+        - commited
+
+
+* organizar trabalho usando branches
+    = comandos:
+        - git branch
+        - git checkout
+        - git reset
+        - ( update-ref )
+        - ( symbolic-ref )
+        - git merge
+        - git rebase
+    - um dos problemas que sistemas de versão antigos tinham era que os commits eram "grandes demais"
+    - basicamente, a idéia é que o trabalho esteja dividido em vários commits pequenos, assim se for necessário consertar um deles, é mais fácil.
+    - mas daí integrar o trabalho de todo mundo fica mais difícil, então o git tem a noção de branches para ajudar
+    - branches representam um conjunto de commits, mas são implementadas como uma referência a um commit apenas
+    - daí a relação de parentesco entre commits faz a branch ter o sentido que a gente realmente quer.
+
+    - existem dois jeitos principais de juntar branches:
+        - merge
+        - rebase
+
+    - tags são como branches, mas o objetivo delas é ficar parada em um commit para sempre.
+    - A HEAD não acompanha tags, só branches.
+
+
+* compartilhar commits entre repositórios
+    = comandos:
+        - git remote
+        - git push
+        - git fetch
+        - git pull
+    - Aqui vale a pena falar um pouco mais sobre referencias
+    - Estão no .git/refs
+    - "heads" são branches - cabeças de um grafo de commits
+    - "tags" são tags
+    - "remotes" são referências a outros repositórios.
+    - git não deixa 'poluir' remotos
+    - detalhe : perceberam que não falei de ssh até agora? É possível clonar pastas direto, então basta compartilhar a pasta do repositório na rede, e você tem um servidor de git!... sort of
+    - Falar sobre bare repos, e o problema de não poder pushar para checked out branch.
+
+
+==================
+=== Submódulos ===
+==================
+
+* São jeitos de integrar mais de um projeto git no mesmo repositório.
+    - ao invés de incluir a pasta do submódulo como arquivos individuais, o commit do submódulo é versionado
+    - guardado no arquivo .gitmodules
+
+* Mas a feature não é muito bem resolvida.
+    - problemas de dessincronia e rollbacks
+    - requer inicialização à parte
+    - branch do submódulo não é óbvia - aumenta complexidade
+
+* Outras soluções
+    - subtree
+        => mais difícil de usar ainda, problemas com atualização
+    - link simbólico
+        => simples, mas não versiona
+
+* No final das contas, submódulos acabam sendo o mais útil mesmo, mas precisa tomar cuidado para usar.
+
+
+===============
+=== Configs ===
+===============
+
+* O git pode ser customizado extensivamente
+
+* Vários escopos de configuração
+    - repositório
+    - computador
+    - sistema
+
+* Alguns arquivos principais de configs
+    - .gitconfig
+    - .gitmodules
+    - .gitignore
+
+* Mostrar exemplo de gitconfig com muita coisa
+
+* Repositório de gitignore
+
+
+=================
+=== Workflows ===
+=================
+
+- Existem vários jeitos de trabalhar usando git
+
+* Workflow básico.
+    - já vem integrado no git
+    - baseado em git pull & git push apenas
+    - work -> commit -> pull -> push
+
+    => simples, mas causa muitos conflitos.
+
+* Rebase ao invés de merge
+    - usa rebase ao invés de merge no pull
+    - é possível configurar o git para funcionar assim
+
+    => melhor para evitar conflitos, mas ainda é desorganizado.
+    => histórico mais fácil de ler, porém linear.
+
+* Branch "dev"
+    - trabalho acontece numa branch de desenvolvimento.
+    - a idéia é fazer a master ser sempre estável.
+
+    => bom para projetos publicados, a master é confiável.
+    => em compensação, overlap com funcionalidade de tags.
+
+* Branches-tópico
+    - features novas vão cada uma em sua própria branch.
+    - integradas na branch de desenvolvimento por um integrador designado.
+
+    => histórico super claro
+    => permite revisão de código fácil
+    => vira um inferno quando é necessário integrar mais de uma feature
+    => vira mais inferno ainda quando features têm dependências entre si.
+
+* Forks-integrador
+    - cada pessoa trabalha em seu próprio repositório
+    - integrador integra em seu repositório a partir dor forks
+    - integrador atualiza repositório principal após integrar
+    - permite controle total sobre o repositório principal
+
+    => o jeito mais fácil de enforçar permissões e revisão de código
+    => extramamente burocrático
+    => uso de git push -f não é suportado pelo SourceTree
+
+* Forks-pull-request
+    - Igual ao forks-integrador, mas a integração não passa pelo repositório do integrador.
+
+    => Não é mais necessário ter um integrador dedicado, várias pessoas podem integrar o código.
+    => Fluxos de commits são triangulares e fixos
+    => Permite configuração para uso fácil (git pull / git push vão para o lugar certo)
+    => ainda é muito burocrático
+
+* Tiers de integradores
+    - Igual ao Forks-integrador, mas com mais níveis de integração
+    - É o workflow que o kernel do Linux usa
+
+    => RIDICULAMENTE burocrático
+    => permite filtragem muito grande de commits ruins
+
+* Ulimate Frankenstein
+    - As idéias acima não são auto-excludentes
+    - Usar todas ao mesmo tempo
+
+    => Super organizado se for mantido direito...
+    => ...mas traz todas as desvantagens de todos os workflows junto também
+    => além da burocracia insana.
+
+
+=============
+=== Hooks ===
+=============
+
+* Automatização para as suas operações no git!
+    - serve para colocar um prefixo nas descrições dos commits por exemplo
+    - o JIRA é integrado com prefixos de commits.
+
+* Permite rejeitar commits, rodar testes automaticamente, mandar e-mails automáticos, etc...
+
+* Pasta de templates default + git init

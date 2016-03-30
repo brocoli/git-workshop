@@ -15,7 +15,7 @@
 - objetivo é tentar passar como o git funciona, quais as idéias por trás, porque entendendo as idéias bem simples e elegantes que o git é baseado em cima, o jeito de consertar as coisas fica beem mais óbvio e simples de entender.
 
 
-- Então quando vocês pensam em git, qual a 1a palavra que vêm à cabeça? (e não vale falar "tua mãe")
+- Então quando vocês pensam em git, qual a 1a palavra que vêm à cabeça?
 
 commits?
 branches?
