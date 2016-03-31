@@ -162,6 +162,20 @@
     => vira um inferno quando é necessário integrar ou testar mais de uma feature ao mesmo tempo
     => vira mais inferno ainda quando features têm dependências entre si.
 
+* Feature-freeze branches
+    - branch de release para a qual nenhuma feature a mais pode ser mergeada.
+    - apenas bugfixes podem ser pushados para essa branch
+
+    => ajuda a resolver problemas do flow de branches-tópico
+    => inflexível
+
+* Gitflow
+    - fusão das idéias acima
+    - um dos workflows mais usados
+
+    => muito complicado
+    => altamente burocrático, pouco ágil.
+
 * Forks-integrador
     - cada pessoa trabalha em seu próprio repositório
     - integrador integra em seu repositório a partir dor forks
