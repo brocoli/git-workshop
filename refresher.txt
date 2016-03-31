@@ -1,0 +1,46 @@
+== Refresher ==
+
+    *** reescrever usando as comics do XKCD como hook
+
+- Para o quê git é usado?
+
+O git é um sistema de versionamento de documentos. Esses sistemas são usados como um jeito de manter um histórico e backups detalhados de trabalho, e ao mesmo tempo facilitar o trabalho em grupo, facilitando a integração das modificações que várias pessoas podem fazer ao mesmo tempo.
+
+Basicamente, qualquer projeto que fica muito grande acaba eventualmente precisando de um sistema desses, e antes de sistemas como o CVS aparecerem, era uma zona.
+
+O git é um pouco diferente desses sistemas de versionamento mais antigos, principalmente em três coisas:
+
+1) Ele trabalha com o sistema de arquivos do seu próprio computador. Edite um arquivo trackeado pelo git, e ele percebe.
+2) Versões no git são "snapshots" de arquivos, e não diferenças. (mais sobre isso depois)
+3) O git tem um foco em fazer o máximo de operações locais possível.
+
+
+Não sei quantas pessoas chegaram a mexer com SVN, um sistema de versionamento mais antigo, mas na época, "commitar" mandava as suas modificações para o servidor, então realmente significava "colocar a mão no fogo que as modificações estavam ok", porque você podia quebrar o código no servidor fazendo isso. E isso era bem ruim.
+
+
+== Como o git funciona? ==
+
+O que o git fez foi trazer toda a parte do servidor para o seu computador, e implementar como funciona a interface de um cliente com esse servidor "remoto". Vamos primeiro ver como funciona a parte local.
+
+Então commits são os snapshots de uma árvore de arquivos que eu comentei, e para ser possível voltar para trás no histórico, os commits são ligados por parentesco, formando um grafo.
+
+Digamos que você inicializou um repositório vazio numa nova pasta do seu computador.
+
+    *** colocar diagramas de estados de arquivos
+
+Diag 1: - arquivo não trackeado num repositório vs. arquivo trackeado
+
+    *** git add -n (parentese p/ explicar manpages?)
+
+Diag 2: - os 3 estados do git
+    1) commitado
+    2) staged (ou, "na staging area", ou "no index")
+    3) modificado
+
+Então se uma coisa está commitada, ela está guuardada na *tree* (sim, árvore, more on that later). Uma coisa que está modificada está simplesmente modificada no seu *working directory*, e como commits podem ter várias modificações ao mesmo tempo, um arquivo pode estar staged, ou seja, pronto para entrar no próximo commit. Esse index pode ser pensado como: eles estão em uma árvore em construção, mas ainda não estão na árvore oficial.
+
+Na verdade esses 3 estados se aplicam a modificações em arquivos, e não só aos arquivos inteiros em si.
+
+    *** git add -p
+
+Então o que que é essa árvore
