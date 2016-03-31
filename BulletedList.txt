@@ -3,7 +3,7 @@
 === Git from the ground up ===
 ==============================
 
-* Mostrar comic do xkcd e usar como hook para falar das 4 áreas de atuação do git, que são:
+* Mostrar comic do xkcd e usar como hook para falar das 4 áreas de atuação do git:
     - guardar conteúdo
     - versionar conteúdo guardado em snapshots
     - organizar trabalho usando branches
@@ -73,7 +73,7 @@
         - git push
         - git fetch
         - git pull
-    - Aqui vale a pena falar um pouco mais sobre referencias
+    - Aqui vale a pena falar um pouco mais sobre referências
     - Estão no .git/refs
     - "heads" são branches - cabeças de um grafo de commits
     - "tags" são tags
@@ -148,9 +148,9 @@
 
 * Branch "dev"
     - trabalho acontece numa branch de desenvolvimento.
-    - a idéia é fazer a master ser sempre estável.
+    - a idéia é fazer a master ser sempre estável ou estar sempre pronta para publicar.
 
-    => bom para projetos publicados, a master é confiável.
+    => bom para projetos publicados, ou com publicação contínua.
     => em compensação, overlap com funcionalidade de tags.
 
 * Branches-tópico
@@ -159,7 +159,7 @@
 
     => histórico super claro
     => permite revisão de código fácil
-    => vira um inferno quando é necessário integrar mais de uma feature
+    => vira um inferno quando é necessário integrar ou testar mais de uma feature ao mesmo tempo
     => vira mais inferno ainda quando features têm dependências entre si.
 
 * Forks-integrador
