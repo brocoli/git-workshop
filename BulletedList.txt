@@ -43,6 +43,8 @@
         - staged
         - commited
 
+***** git add -p !!! ******
+
 
 * organizar trabalho usando branches
     = comandos:
@@ -67,6 +69,10 @@
     - A HEAD não acompanha tags, só branches.
 
 
+***** git rebase -i !!! ******
+***** git rebase --onto !!! ******
+
+
 * compartilhar commits entre repositórios
     = comandos:
         - git remote
@@ -81,6 +87,27 @@
     - git não deixa 'poluir' remotos
     - detalhe : perceberam que não falei de ssh até agora? É possível clonar pastas direto, então basta compartilhar a pasta do repositório na rede, e você tem um servidor de git!... sort of
     - Falar sobre bare repos, e o problema de não poder pushar para checked out branch.
+
+
+===============
+=== Configs ===
+===============
+
+* O git pode ser customizado extensivamente
+
+* Vários escopos de configuração
+    - repositório
+    - computador
+    - sistema
+
+* Alguns arquivos principais de configs
+    - .gitconfig
+    - .gitmodules
+    - .gitignore
+
+* Mostrar exemplo de gitconfig com muita coisa
+
+* Repositório de gitignore
 
 
 ==================
@@ -103,27 +130,6 @@
         => simples, mas não versiona
 
 * No final das contas, submódulos acabam sendo o mais útil mesmo, mas precisa tomar cuidado para usar.
-
-
-===============
-=== Configs ===
-===============
-
-* O git pode ser customizado extensivamente
-
-* Vários escopos de configuração
-    - repositório
-    - computador
-    - sistema
-
-* Alguns arquivos principais de configs
-    - .gitconfig
-    - .gitmodules
-    - .gitignore
-
-* Mostrar exemplo de gitconfig com muita coisa
-
-* Repositório de gitignore
 
 
 =================
@@ -171,10 +177,11 @@
 
 * Gitflow
     - fusão das idéias acima
-    - um dos workflows mais usados
+    - um dos workflows mais usados p/ projetos grandes
 
+    => bem organizado
+    => requer uso de muitas convenções de nomes e de configurações
     => muito complicado
-    => altamente burocrático, pouco ágil.
 
 * Forks-integrador
     - cada pessoa trabalha em seu próprio repositório
